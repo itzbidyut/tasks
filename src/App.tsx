@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.scss";
+import InputFeild from "./components/InputFeild";
+import { Todo } from "./modal";
+import TodosLists from "./components/TodosLists";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App: React.FC = () => {
+  const [todo, setTodo] = useState<string>("");
+  const [todos, SetTodos] = useState<Todo[]>([]);
+  const notify = () => toast.success("Todo Added Successfully");
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      SetTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+      setTodo("");
+      notify();
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App ">
+      <ToastContainer />
+      <div className="navbar">
+        <p>TASKS</p>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-5">
+            <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+
+            {todos.length > 0 ? (
+              <div className="TodosLists">
+                <TodosLists todos={todos} SetTodos={SetTodos} todo={todo} />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
