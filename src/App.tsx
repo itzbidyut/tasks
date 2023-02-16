@@ -23,7 +23,7 @@ const App: React.FC = () => {
     <div className="App ">
       <ToastContainer />
       <div className="navbar">
-        <p>TASKS</p>
+        <p>my TASKS</p>
       </div>
       <div className="container">
         <div className="row">
